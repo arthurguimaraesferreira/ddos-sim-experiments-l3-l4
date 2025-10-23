@@ -1,0 +1,1 @@
+sudo bonesi -i bots.txt -p icmp 192.168.100.2:50001 -s 0

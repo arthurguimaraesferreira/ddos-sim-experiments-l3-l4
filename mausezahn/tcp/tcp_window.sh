@@ -1,0 +1,1 @@
+sudo mausezahn enp0s3 -A rand -B 192.168.100.2 -t tcp "dp=50001, win=0" -c 10
