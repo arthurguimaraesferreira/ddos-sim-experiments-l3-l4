@@ -1,0 +1,1 @@
+sudo bonesi -i bot_syn_reflection.txt -p tcp -s 0 -d enp0s3 192.168.100.3:50001
