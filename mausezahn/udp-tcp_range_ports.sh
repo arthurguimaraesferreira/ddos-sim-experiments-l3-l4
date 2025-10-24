@@ -1,0 +1,1 @@
+sudo mausezahn enp0s3 -A rand -B 192.168.100.2 -t udp "sp=400-500, dp=600-700" -c 0 -p 512

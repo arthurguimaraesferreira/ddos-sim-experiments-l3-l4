@@ -1,1 +1,2 @@
+# Packets ok, but NO ANSWERS (Echo-Replys) :(
 sudo t50 192.168.100.255 --protocol icmp --icmp-type 8 --icmp-code 0 --saddr 192.168.100.2 --threshold 2
