@@ -1,0 +1,1 @@
+sudo trafgen --dev <interface> --conf <file.cfg> -r

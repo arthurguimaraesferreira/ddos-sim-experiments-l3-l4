@@ -1,1 +1,0 @@
-sudo trafgen --dev enp0s3 --conf trafgenicmpecho2.cfg

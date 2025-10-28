@@ -1,1 +1,0 @@
-sudo trafgen --dev enp0s3 --conf trafgen_syn_flood.cfg 
