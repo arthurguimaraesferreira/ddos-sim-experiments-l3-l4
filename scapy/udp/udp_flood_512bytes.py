@@ -59,7 +59,6 @@ def run_udp_flood_attack():
     print(f"Total time to send packets: {duration:.4f} seconds")
 
 
-
 if __name__ == "__main__":
     run_udp_flood_attack()
 

