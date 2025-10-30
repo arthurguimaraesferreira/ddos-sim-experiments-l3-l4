@@ -46,7 +46,7 @@ def run_udp_fake_frag():
         lista_de_pacotes.append(packet)
         numero_de_pacotes_enviados += 1
 
-        if(numero_de_pacotes_enviados == 100):
+        if(numero_de_pacotes_enviados == NUM_PACKETS):
             break
 
 

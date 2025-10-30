@@ -3,9 +3,8 @@ import random
 import time
 import ipaddress
 
-# UDP Fraggle
-BROADCAST_IP = "192.168.100.255"
-VICTIM_IP = "192.168.100.2"
+# ICMP Real Frag
+TARGET_IP = "192.168.100.2"
 BOTFILE = "../bots.txt"
 NUM_PACKETS = 100
 
@@ -19,32 +18,40 @@ def load_bots(filename):
                 bot_ips.append(ip)
     return bot_ips
 
-def run_udp_fraggle():
+def run_icmp_real_frag():
     bot_ips = load_bots(BOTFILE)
     lista_de_pacotes = []
     numero_de_pacotes_enviados = 0
 
-    while True:
-        eth_layer = Ether()
-        ip_layer = IP(src=VICTIM_IP, dst=BROADCAST_IP)
-        udp_layer = UDP(sport=50001, dport=7)  # Echo UDP
-        payload = Raw(load=b"X")
-        packet = eth_layer / ip_layer / udp_layer / payload
-        lista_de_pacotes.append(packet)
-        numero_de_pacotes_enviados += 1
+    # Big payload (4000 bytes), force frag
+    icmp_payload = b"A" * 4000
 
+    while True:
+        source_ip = random.choice(bot_ips)
+        ip_layer = IP(src=source_ip, dst=TARGET_IP)
+        eth_layer = Ether()
+        icmp_layer = ICMP(type=8, code=0) / icmp_payload  # Echo Request with big payload
+        packet = ip_layer / icmp_layer
+        # Frag
+        fragments = fragment(packet, fragsize=1480)  # Typical MTU, -headers
+        for frag in fragments:
+            lista_de_pacotes.append(eth_layer / frag)
+            numero_de_pacotes_enviados += 1
+            if numero_de_pacotes_enviados == NUM_PACKETS:
+                break
         if numero_de_pacotes_enviados == NUM_PACKETS:
             break
 
     start_time = time.perf_counter()
-    wrpcap("udp_fraggle.pcap", lista_de_pacotes)
+    wrpcap("icmp_real_frag.pcap", lista_de_pacotes)
     end_time = time.perf_counter()
     duration = end_time - start_time
 
     print(f"\nPCAP file saved.")
     print(f"Total time to save packets: {duration:.4f} seconds")
 
-if __name__ == "__main__":
-    run_udp_fraggle()
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp_fraggle.py
+if __name__ == "__main__":
+    run_icmp_real_frag()
+
+# sudo PYTHONPATH=$HOME/scapy python3 icmp_real_frag.py
