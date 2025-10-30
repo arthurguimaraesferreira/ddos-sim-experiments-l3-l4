@@ -72,12 +72,12 @@ def run_MULTI():
 
 
     start_time = time.perf_counter()
-    sendpfast(lista_de_pacotes, iface="enp0s3", file_cache=True)
+    wrpcap("multiprotocol.pcap", lista_de_pacotes)
     end_time = time.perf_counter()
     duration = end_time - start_time
 
-    print(f"\nSending completed.")
-    print(f"Total time to send packets: {duration:.4f} seconds")
+    print(f"\nPCAP file saved.")
+    print(f"Total time to save packets: {duration:.4f} seconds")
 
 
 if __name__ == "__main__":
