@@ -2,7 +2,7 @@
 
 # Network interface to monitor
 INTERFACE="enp0s3"
-# BPF filter for TCP packets destined to the victim
+# Display filter for TCP packets destined to the victim
 FILTER="tcp and ip.dst == 192.168.100.2"
 # Temporary file to store the capture
 TMPFILE="tcp_capture.txt"
@@ -30,18 +30,12 @@ while kill -0 $TSHARK_PID 2>/dev/null; do
     LAST_LINES=$NEW_LINES
 done
 
-# Analyze captured data
-if [ -s "$TMPFILE" ]; then
-    first=$(head -n 1 "$TMPFILE")
-    last=$(tail -n 1 "$TMPFILE")
-    count=$(wc -l < "$TMPFILE")
-    duration=$(echo "$last - $first" | bc -l)
+# Wait 3 seconds to ensure file is fully written
+sleep 3
 
-    echo "Packets captured: $count"
-    echo "Timestamp of the first packet: $first"
-    echo "Timestamp of the last packet: $last"
-    echo "Duration (seconds): $duration"
+# Analyze captured data using calculator.sh
+if [ -s "$TMPFILE" ]; then
+    ./calculator.sh "$TMPFILE"
 else
     echo "No packets captured."
 fi
-
