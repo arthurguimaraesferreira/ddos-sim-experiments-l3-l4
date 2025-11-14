@@ -1,2 +1,2 @@
 # -t = topspeed
-sudo tcpreplay -i <interface> -t -l 0 <file>.pcap
+sudo tcpreplay -i <interface> -t -K -l 0 <file>.pcap

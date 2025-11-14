@@ -7,7 +7,7 @@ import ipaddress
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
-NUM_PACKETS = 10000000
+NUM_PACKETS = 1000000
 PACKET_PAYLOAD_SIZE = 512
 
 def load_bots(filename):
@@ -49,7 +49,7 @@ def run_udp_flood_attack():
 
 
     start_time = time.perf_counter()
-    wrpcap("create_pcap_tcpreplay_test_udp_512bytes_flood.pcap", lista_de_pacotes)
+    wrpcap("tcpreplay_test_udp_512bytes_flood.pcap", lista_de_pacotes)
     end_time = time.perf_counter()
     duration = end_time - start_time
 

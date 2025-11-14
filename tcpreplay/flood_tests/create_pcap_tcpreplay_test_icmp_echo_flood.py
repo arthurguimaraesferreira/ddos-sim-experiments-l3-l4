@@ -6,7 +6,7 @@ import ipaddress
 # Tcpreplay ICMP Echo Flood (60 seconds)
 TARGET_IP = "192.168.100.2"
 BOTFILE = "../bots.txt"
-NUM_PACKETS = 10000000
+NUM_PACKETS = 1000000
 
 def load_bots(filename):
     bot_ips = []

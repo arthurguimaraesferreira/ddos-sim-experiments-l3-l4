@@ -7,7 +7,7 @@ import ipaddress
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
-NUM_PACKETS = 10000000
+NUM_PACKETS = 1000000
 
 def load_bots(filename):
     bot_ips = []
