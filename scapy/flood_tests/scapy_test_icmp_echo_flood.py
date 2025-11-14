@@ -40,7 +40,7 @@ def run_icmp_flood_attack():
     print(f"\nSending packets for {SEND_DURATION-build_duration} seconds...")
 
     # Start sending 
-    sendpfast(packets, iface=IFACE, file_cache=True, loop=0)
+    sendpfast(packets, iface=IFACE, file_cache=True, loop=1)
 
     print(f"\nPacket sending finished.")
 

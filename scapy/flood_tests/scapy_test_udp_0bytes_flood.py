@@ -40,7 +40,7 @@ def run_udp_flood_attack():
     print(f"Time to build packets: {build_duration:.4f} seconds")
     print(f"\nSending packets for {SEND_DURATION-build_duration} seconds...")
 
-    sendpfast(packets, iface=IFACE, file_cache=True, loop=0)
+    sendpfast(packets, iface=IFACE, file_cache=True, loop=1)
 
     print(f"\nPacket sending finished.")
 
