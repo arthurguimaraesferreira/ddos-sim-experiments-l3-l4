@@ -1,1 +1,1 @@
-sudo trafgen --dev <interface> --conf <file.cfg>
+sudo timeout -s INT 60 trafgen --dev <interface> --conf <file.cfg>
