@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INTERFACE="enp0s3"
-FILTER="icmp and icmp.type == 8 and ip.dst == 192.168.100.2"
+INTERFACE="enp3s0"
+FILTER="icmp and icmp.type == 8 and ip.dst == 150.164.10.117"
 TMPFILE="icmp_capture.txt"
 INACTIVITY=5 
 
