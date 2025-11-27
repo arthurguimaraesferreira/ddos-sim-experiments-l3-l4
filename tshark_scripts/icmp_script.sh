@@ -1,9 +1,9 @@
 #!/bin/bash
 
-INTERFACE="enp3s0"
+INTERFACE="enp0s3"
 FILTER="icmp and icmp.type == 8 and ip.dst == 150.164.10.117"
 TMPFILE="icmp_capture.txt"
-INACTIVITY=5 
+INACTIVITY=10 
 
 # Clear previous capture file
 > "$TMPFILE"

@@ -7,7 +7,7 @@ FILTER="udp and ip.dst == 192.168.100.2"
 # Temporary file to store the capture
 TMPFILE="udp_capture.txt"
 # Time in seconds to wait before stopping after inactivity
-INACTIVITY=5
+INACTIVITY=10
 
 # Clear previous capture file
 > "$TMPFILE"
