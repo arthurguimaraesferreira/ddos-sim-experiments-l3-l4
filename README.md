@@ -12,7 +12,7 @@ O repositório também inclui a **tabela completa com a descrição das anomalia
 
 ## Resumo do artigo
 
-Os ataques *DDoS* comprometem a disponibilidade de infraestruturas críticas por meio de fluxos de dados massivos e coordenados. O emprego de ferramentas de simulação de *DDoS* permitem reproduzir esses comportamentos de forma controlada e segura apoiando o desenvolvimento de sistemas de segurança. Apesar das avaliações existentes, observa-se uma carência de dados comparativos sistematizados que auxiliem na seleção de ferramentas quanto à fidelidade e ao desempenho Este trabalho apresenta uma análise comparativa de ferramentas *open source* de linha de comando (CLI) voltadas à simulação de ataques *DDoS* nas **camadas de rede e transporte**. A avaliação levou em conta a capacidade de geração~de tráfego e a aderência à taxonomia de Jelena Mirkovic para modelagem de anomalias. Os resultados evidenciam diferenças significativas entre as ferramentas, indicando que a eficácia dos testes de mitigação depende da escolha de um simulador alinhado aos objetivos do experimento, favorecendo avaliações mais realistas e reprodutíveis.
+*Os ataques DDoS comprometem a disponibilidade de infraestruturas críticas por meio de fluxos de dados massivos e coordenados. O emprego de ferramentas de simulação de DDoS permitem reproduzir esses comportamentos de forma controlada e segura apoiando o desenvolvimento de sistemas de segurança. Apesar das avaliações existentes, observa-se uma carência de dados comparativos sistematizados que auxiliem na seleção de ferramentas quanto à fidelidade e ao desempenho Este trabalho apresenta uma análise comparativa de ferramentas open source de linha de comando (CLI) voltadas à simulação de ataques DDoS nas **camadas de rede e transporte**. A avaliação levou em conta a capacidade de geração~de tráfego e a aderência à taxonomia de Jelena Mirkovic para modelagem de anomalias. Os resultados evidenciam diferenças significativas entre as ferramentas, indicando que a eficácia dos testes de mitigação depende da escolha de um simulador alinhado aos objetivos do experimento, favorecendo avaliações mais realistas e reprodutíveis.*
 
 ---
 
@@ -35,13 +35,13 @@ Experiments/
 
 Dentro de cada diretório de ferramenta, os arquivos seguem uma estrutura padrão:
 
-* `/` (raíz)
+* `/` (raíz)  
   Implementações das anomalias de tráfego gerais. 
 
-* `icmp/`, `udp/`, `tcp/`
+* `icmp/`, `udp/`, `tcp/`  
   Implementações das anomalias de tráfego separadas por protocolo.
 
-* `flood_tests/`
+* `flood_tests/`  
   Testes voltados à avaliação de desempenho volumétrico (*flood*).
 
 ---
@@ -70,11 +70,11 @@ Os scripts foram utilizados apenas na aferição do desempenho volumétrico, sen
 
 ### 📄 Arquivos adicionais
 
-* `ANOMALIAS (Descrição e Resultados).pdf`
+* `ANOMALIAS (Descrição e Resultados).pdf`  
   Documento com a **descrição das anomalias de tráfego avaliadas** e seus respectivos resultados.
 
-* `server.py`
-  Servidor simples utilizado nos experimentos da anomalia de reflexão *TCP SYN*.
+* `server.py`  
+  Servidor simples utilizado nos experimentos da anomalia de reflexão *TCP SYN Reflection*.
 
 ---
 
@@ -100,8 +100,8 @@ As ferramentas Hping3 e Mausezahn oferecem um modo de operação interativo, que
 
 * Este repositório **não deve ser utilizado para ataques reais**.
 * Todo o conteúdo foi desenvolvido **exclusivamente para fins acadêmicos e experimentais**.
-* Os scripts refletem exatamente os cenários avaliados no artigo, sem ajustes posteriores.
-* A taxonomia de **Jelena Mirkovic** contribuiu para a análise da capacidade de geração de anomalias, sendo utilizada como principal referência. Algumas anomalias foram reproduzidas fielmente, enquanto outras foram adaptadas ou descartadas conforme o escopo do estudo. Disponível em: [https://www.isi.edu/people-mirkovic/ddos-benchmarks/ddos-attack-list/](https://www.isi.edu/people-mirkovic/ddos-benchmarks/ddos-attack-list/)
+* Os *scripts* refletem exatamente os cenários avaliados no artigo, sem ajustes posteriores.
+* A taxonomia de **Jelena Mirkovic** contribuiu para a análise da capacidade de geração de anomalias, sendo utilizada como principal referência. A análise incorporou diversos itens da lista da pesquisadora de forma integral, enquanto adaptou outros, descartou alguns por estarem fora do escopo e definiu novos a partir das capacidades de customização das ferramentas. Disponível em: [https://www.isi.edu/people-mirkovic/ddos-benchmarks/ddos-attack-list/](https://www.isi.edu/people-mirkovic/ddos-benchmarks/ddos-attack-list/)
 
 
 ---
