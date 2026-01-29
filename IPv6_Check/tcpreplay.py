@@ -49,4 +49,4 @@ def run_udp_flood_attack():
 if __name__ == "__main__":
     run_udp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcpreplay.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcpreplay.py
