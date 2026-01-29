@@ -1,3 +1,4 @@
+# Different PPS (commands)
 sudo trafgen --dev <interface> --conf <file.cfg> -b 1pps
 sudo trafgen --dev <interface> --conf <file.cfg> -b 100pps
 sudo trafgen --dev <interface> --conf <file.cfg> -b 1000pps

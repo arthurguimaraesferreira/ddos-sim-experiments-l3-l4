@@ -1,1 +1,2 @@
+# Comando para as simuações de flood com Trafgen
 sudo timeout -s INT 60 trafgen --dev <interface> --conf <file.cfg>
