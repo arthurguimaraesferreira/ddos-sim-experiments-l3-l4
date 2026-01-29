@@ -1,5 +1,4 @@
-# multiprotocol.htcl
-# Sends packets with random protocol (ICMP, UDP, or TCP SYN) using hping3 TCL scripting
+# Multi protocol (ICMP, UDP, or TCP SYN) using hping3 TCL scripting
 
 set dst_ip "192.168.100.2"
 set dst_port 50001
@@ -7,12 +6,10 @@ set window 8192
 set seq 0
 set count 0
 
-# Function to generate random IP address
 proc random_ip {} {
     return "[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}].[expr {int(rand()*256)}]"
 }
 
-# Function to generate random source port (1024–65535)
 proc random_port {} {
     return [expr {int(rand()*64512) + 1024}]
 }
@@ -37,10 +34,9 @@ while {1} {
     hping send $pkt
     incr count
 
-    # Print every 1000 packets sent
     if {[expr {$count % 1000}] == 0} {
         puts "$count multiprotocol packets sent so far..."
     }
 }
 
-# To run: sudo hping3 exec multiprotocol.htcl
+# Comando: sudo hping3 exec multiprotocol.htcl

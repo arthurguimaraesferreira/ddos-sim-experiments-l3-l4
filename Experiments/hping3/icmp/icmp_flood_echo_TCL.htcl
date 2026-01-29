@@ -1,5 +1,4 @@
-# Hping3 Echo Flood with TCL script
-# ICMP Echo-Request Flood (rand source, ttl=64, payload=0) for hping3 TCL mode
+# Hping3 Echo-Request Flood with TCL script
 
 set dst_ip "192.168.100.2"
 set count 0
@@ -21,4 +20,4 @@ while {1} {
     }
 }
 
-# sudo hping3 exec icmp_flood_echo_TCL.htcl
+# Comando: sudo hping3 exec icmp_flood_echo_TCL.htcl
