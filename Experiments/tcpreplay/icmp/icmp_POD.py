@@ -56,4 +56,4 @@ def run_icmp_POD():
 if __name__ == "__main__":
     run_icmp_POD()
 
-# sudo PYTHONPATH=$HOME/scapy python3 icmp_POD.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 icmp_POD.py

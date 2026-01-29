@@ -50,4 +50,4 @@ def run_icmp_smurf():
 if __name__ == "__main__":
     run_icmp_smurf()
 
-# sudo PYTHONPATH=$HOME/scapy python3 icmp_smurf.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 icmp_smurf.py

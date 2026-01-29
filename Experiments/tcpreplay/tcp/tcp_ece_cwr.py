@@ -61,4 +61,4 @@ def run_tcp_ece_cwr():
 if __name__ == "__main__":
     run_tcp_ece_cwr()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_ece_cwr.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_ece_cwr.py

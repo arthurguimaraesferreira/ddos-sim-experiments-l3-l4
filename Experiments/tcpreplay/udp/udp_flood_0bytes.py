@@ -60,4 +60,4 @@ def run_udp_flood_attack():
 if __name__ == "__main__":
     run_udp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp_flood_0bytes.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 udp_flood_0bytes.py

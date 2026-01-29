@@ -5,7 +5,7 @@ import time
 import sys
 import ipaddress
 
-# TCP SYN Flood
+# TCP Window 0
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
@@ -60,4 +60,4 @@ def run_tcp_window0():
 if __name__ == "__main__":
     run_tcp_window0()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_window0.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_window0.py

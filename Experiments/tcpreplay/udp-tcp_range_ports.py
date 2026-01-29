@@ -60,4 +60,4 @@ def run_range_ports():
 if __name__ == "__main__":
     run_range_ports()
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp-tcp_custom_ports.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 udp-tcp_range_ports.py

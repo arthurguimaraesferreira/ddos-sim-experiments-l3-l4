@@ -54,4 +54,4 @@ def run_icmp_real_frag():
 if __name__ == "__main__":
     run_icmp_real_frag()
 
-# sudo PYTHONPATH=$HOME/scapy python3 icmp_real_frag.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 icmp_real_frag.py

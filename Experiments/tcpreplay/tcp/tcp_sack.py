@@ -47,4 +47,4 @@ def run_sack_malformed():
 if __name__ == "__main__":
     run_sack_malformed()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_sack.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_sack.py

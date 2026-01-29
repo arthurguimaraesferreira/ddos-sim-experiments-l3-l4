@@ -64,4 +64,4 @@ def run_tcp_malformed_attack():
 if __name__ == "__main__":
     run_tcp_malformed_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_malformed.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_malformed.py

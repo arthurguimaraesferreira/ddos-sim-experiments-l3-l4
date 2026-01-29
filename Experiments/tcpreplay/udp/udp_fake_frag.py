@@ -63,4 +63,4 @@ if __name__ == "__main__":
     run_udp_fake_frag()
 
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp_fake_frag.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 udp_fake_frag.py

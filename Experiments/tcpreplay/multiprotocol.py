@@ -83,4 +83,4 @@ def run_MULTI():
 if __name__ == "__main__":
     run_MULTI()
 
-# sudo PYTHONPATH=$HOME/scapy python3 multiprotocol.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 multiprotocol.py

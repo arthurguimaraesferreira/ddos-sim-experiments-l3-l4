@@ -3,7 +3,7 @@ import random
 import time
 import ipaddress
 
-# Tcpreplay TCP SYN Flood (60 seconds)
+# Tcpreplay TCP SYN Flood
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
@@ -59,4 +59,4 @@ def run_tcp_flood_attack():
 if __name__ == "__main__":
     run_tcp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 create_pcap_tcpreplay_test_tcp_syn_flood.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 create_pcap_tcpreplay_test_tcp_syn_flood.py

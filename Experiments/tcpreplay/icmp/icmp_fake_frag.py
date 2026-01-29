@@ -43,4 +43,4 @@ def run_icmp_fake_fragment():
 if __name__ == "__main__":
     run_icmp_fake_fragment()
 
-# sudo PYTHONPATH=$HOME/scapy python3 icmp_fake_frag.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 icmp_fake_frag.py

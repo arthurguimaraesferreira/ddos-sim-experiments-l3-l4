@@ -3,7 +3,7 @@ import random
 import time
 import ipaddress
 
-# ICMP Sequential Type/Code
+# ICMP Twinge (Sequential Type/Code)
 TARGET_IP = "192.168.100.2"
 BOTFILE = "../bots.txt"
 NUM_PACKETS = 100
@@ -54,4 +54,4 @@ def run_icmp_sequential_type_code():
 if __name__ == "__main__":
     run_icmp_sequential_type_code()
 
-# sudo PYTHONPATH=$HOME/scapy python3 icmp_sequential_type_code_flood.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 icmp_sequential_type_code_flood.py

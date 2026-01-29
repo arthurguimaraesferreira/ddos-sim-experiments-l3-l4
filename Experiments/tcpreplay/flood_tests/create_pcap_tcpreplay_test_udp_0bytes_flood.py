@@ -3,7 +3,7 @@ import random
 import time
 import ipaddress
 
-# Tcpreplay UDP Flood (0 bytes) (60 seconds)
+# Tcpreplay UDP Flood (0 bytes)
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
@@ -58,4 +58,4 @@ def run_udp_flood_attack():
 if __name__ == "__main__":
     run_udp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 create_pcap_tcpreplay_test_udp_0bytes_flood.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 create_pcap_tcpreplay_test_udp_0bytes_flood.py

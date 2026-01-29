@@ -5,7 +5,7 @@ import time
 import sys
 import ipaddress
 
-# TCP Land
+# TCP Land Attack
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "../bots.txt"
@@ -60,4 +60,4 @@ def run_tcp_land():
 if __name__ == "__main__":
     run_tcp_land()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_land.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_land.py
