@@ -59,4 +59,4 @@ def run_tcp_syn_flood():
 if __name__ == "__main__":
     run_tcp_syn_flood()
 
-# timeout -s INT 60 sudo PYTHONPATH=$HOME/scapy python3 scapy_test_tcp_syn_flood.py
+# Comando: timeout -s INT 60 sudo PYTHONPATH=$HOME/scapy python3 scapy_test_tcp_syn_flood.py

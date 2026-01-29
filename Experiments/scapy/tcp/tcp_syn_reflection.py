@@ -28,4 +28,4 @@ def run_tcp_syn_reflection():
 if __name__ == "__main__":
     run_tcp_syn_reflection()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_syn_reflection.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_syn_reflection.py

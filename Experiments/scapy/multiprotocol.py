@@ -52,7 +52,7 @@ def run_MULTI():
             source_ip = random.choice(bot_ips)
             ip_layer = IP(src=source_ip, dst=TARGET_IP)
             eth_layer = Ether()
-            icmp_layer = ICMP(type=8, code=0)  # Echo Request
+            icmp_layer = ICMP(type=8, code=0)
             packet = eth_layer / ip_layer / icmp_layer
             lista_de_pacotes.append(packet)
             numero_de_pacotes_enviados += 1
@@ -83,4 +83,4 @@ def run_MULTI():
 if __name__ == "__main__":
     run_MULTI()
 
-# sudo PYTHONPATH=$HOME/scapy python3 multiprotocol.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 multiprotocol.py

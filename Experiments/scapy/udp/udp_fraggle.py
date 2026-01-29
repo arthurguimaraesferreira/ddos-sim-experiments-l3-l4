@@ -47,4 +47,4 @@ def run_udp_fraggle():
 if __name__ == "__main__":
     run_udp_fraggle()
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp_fraggle.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 udp_fraggle.py

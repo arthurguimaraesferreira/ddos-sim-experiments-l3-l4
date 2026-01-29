@@ -49,4 +49,4 @@ def run_icmp_flood_attack():
 if __name__ == "__main__":
     run_icmp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 icmp_flood_echo.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 icmp_flood_echo.py

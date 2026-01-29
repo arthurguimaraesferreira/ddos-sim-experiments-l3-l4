@@ -62,4 +62,4 @@ def run_tcp_lowrate_attack():
 if __name__ == "__main__":
     run_tcp_lowrate_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_low_rate.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_low_rate.py

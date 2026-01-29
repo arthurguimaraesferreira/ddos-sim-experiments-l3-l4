@@ -64,4 +64,4 @@ def run_tcp_random_flags():
 if __name__ == "__main__":
     run_tcp_random_flags()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_random_flags.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_random_flags.py

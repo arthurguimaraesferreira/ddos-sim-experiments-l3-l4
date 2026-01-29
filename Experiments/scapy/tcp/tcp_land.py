@@ -60,4 +60,4 @@ def run_tcp_land():
 if __name__ == "__main__":
     run_tcp_land()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_land.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_land.py

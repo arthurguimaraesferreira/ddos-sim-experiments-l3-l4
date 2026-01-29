@@ -3,6 +3,7 @@ import random
 import time
 import ipaddress
 
+# Taxa de Envio Random
 TARGET_IP = "192.168.100.2"
 TARGET_PORT = 50001
 BOTFILE = "bots.txt"
@@ -42,3 +43,5 @@ def run_random_interval():
 
 if __name__ == "__main__":
     run_random_interval()
+
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 random_interval.py

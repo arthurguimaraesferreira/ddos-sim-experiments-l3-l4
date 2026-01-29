@@ -61,4 +61,4 @@ def run_tcp_flood_attack():
 if __name__ == "__main__":
     run_tcp_flood_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_syn_flood.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_syn_flood.py

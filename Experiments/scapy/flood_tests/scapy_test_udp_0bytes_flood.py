@@ -47,4 +47,4 @@ def run_udp_flood_attack():
 if __name__ == "__main__":
     run_udp_flood_attack()
 
-# timeout -s INT 60 sudo PYTHONPATH=$HOME/scapy python3 scapy_test_udp_0bytes_flood.py
+# Comando: timeout -s INT 60 sudo PYTHONPATH=$HOME/scapy python3 scapy_test_udp_0bytes_flood.py

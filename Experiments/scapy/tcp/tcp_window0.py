@@ -60,4 +60,4 @@ def run_tcp_window0():
 if __name__ == "__main__":
     run_tcp_window0()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_window0.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_window0.py

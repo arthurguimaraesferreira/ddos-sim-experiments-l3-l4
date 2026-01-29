@@ -61,4 +61,4 @@ def run_different_pps():
 if __name__ == "__main__":
     run_different_pps()
 
-# sudo PYTHONPATH=$HOME/scapy python3 different_pps.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 different_pps.py

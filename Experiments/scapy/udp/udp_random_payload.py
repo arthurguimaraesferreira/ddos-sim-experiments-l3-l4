@@ -63,4 +63,4 @@ if __name__ == "__main__":
     run_udp_random_payload()
 
 
-# sudo PYTHONPATH=$HOME/scapy python3 udp_random_payload.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 udp_random_payload.py

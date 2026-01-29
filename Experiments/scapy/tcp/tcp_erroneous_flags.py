@@ -64,4 +64,4 @@ def run_tcp_erroneous_flags_attack():
 if __name__ == "__main__":
     run_tcp_erroneous_flags_attack()
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_erroneous_flags.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_erroneous_flags.py

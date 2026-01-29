@@ -43,4 +43,4 @@ if __name__ == "__main__":
     run_tcp_snort()
 
 
-# sudo PYTHONPATH=$HOME/scapy python3 tcp_snort_06.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 tcp_snort_06.py

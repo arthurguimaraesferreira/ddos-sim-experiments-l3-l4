@@ -49,4 +49,4 @@ def run_icmp_type_code():
 if __name__ == "__main__":
     run_icmp_type_code()
 
-# sudo PYTHONPATH=$HOME/scapy python3 icmp_type_code.py
+# Comando: sudo PYTHONPATH=$HOME/scapy python3 icmp_type_code.py
