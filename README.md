@@ -2,9 +2,9 @@
 
 Este repositório reúne os comandos, códigos, *scripts* e arquivos de apoio utilizados nos experimentos do artigo:
 
-***“Uma Comparação das Ferramentas Open Source de CLI para Geração de Ataques DDoS em Ambientes de Internet”***
+***“Uma Comparação de Ferramentas Open Source de CLI para Geração de Ataques DDoS em Ambientes de Internet”***
 
-O repositório também inclui a **tabela completa com a descrição das anomalias de tráfego** avaliadas no trabalho, disponível no arquivo ***ANOMALIAS (Descrição e Resultados).pdf***, localizado no diretório raiz do projeto.
+O repositório também inclui a **tabela completa com a descrição das anomalias de tráfego** avaliadas no trabalho, disponível no arquivo ***ANOMALIAS (Descrições e Resultados).pdf***, localizado no diretório raiz do projeto.
 
 **Artigo disponível em:** <link>
 
@@ -12,7 +12,7 @@ O repositório também inclui a **tabela completa com a descrição das anomalia
 
 ## Resumo do artigo
 
-*Os ataques DDoS comprometem a disponibilidade de infraestruturas críticas por meio de fluxos de dados massivos e coordenados. O emprego de ferramentas de simulação de DDoS permitem reproduzir esses comportamentos de forma controlada e segura apoiando o desenvolvimento de sistemas de segurança. Apesar das avaliações existentes, observa-se uma carência de dados comparativos sistematizados que auxiliem na seleção de ferramentas quanto à fidelidade e ao desempenho Este trabalho apresenta uma análise comparativa de ferramentas open source de linha de comando (CLI) voltadas à simulação de ataques DDoS nas **camadas de rede e transporte**. A avaliação levou em conta a capacidade de geração~de tráfego e a aderência à taxonomia de Jelena Mirkovic para modelagem de anomalias. Os resultados evidenciam diferenças significativas entre as ferramentas, indicando que a eficácia dos testes de mitigação depende da escolha de um simulador alinhado aos objetivos do experimento, favorecendo avaliações mais realistas e reprodutíveis.*
+*Os ataques DDoS comprometem a disponibilidade de infraestruturas críticas de rede por meio de fluxos de dados massivos e coordenados. O uso de ferramentas de simulação de DDoS permite reproduzir esses comportamentos de forma controlada e segura, colaborando assim ao desenvolvimento de sistemas de segurança. Entretanto, há ainda uma carência de estudos comparativos que auxiliem na seleção de ferramentas quanto à fidelidade e ao desempenho. Este trabalho apresenta uma análise comparativa de sete ferramentas open source de linha de comando (CLI) voltadas à simulação de ataques DDoS nas camadas de rede e transporte. Essa avaliação experimental levou em conta a capacidade de geração de tráfego, a capacidade de customização e a aderência à taxonomia de Jelena Mirkovic para modelagem de anomalias. Os resultados alcançados apontam diferenças significativas entre as ferramentas, no qual a T50 favorece experimentos volumétricos, a Scapy a flexibilidade na modelagem de anomalias e a Trafgen um equilíbrio entre ambos aspectos.*
 
 ---
 
@@ -70,7 +70,7 @@ Os scripts foram utilizados apenas na aferição do desempenho volumétrico, sen
 
 ### 📄 Arquivos adicionais
 
-* `ANOMALIAS (Descrição e Resultados).pdf`  
+* `ANOMALIAS (Descrições e Resultados).pdf`  
   Documento com a **descrição das anomalias de tráfego avaliadas** e seus respectivos resultados.
 
 * `server.py`  
@@ -90,7 +90,7 @@ Os experimentos envolvem ferramentas *open source* de linha de comando (CLI) que
 * Trafgen
 * T50
 
-Cada ferramenta foi executada em seu código original, sem modificações, respeitando suas funcionalidades nativas.  Além disso, não foram consideradas opções de construção manual de pacotes em modo *raw*. 
+Cada ferramenta foi executada em seu código original, sem modificações, e sem scripts externos que pudessem contornar suas limitações, respeitando suas funcionalidades nativas. Além disso, não foram consideradas opções de construção manual de pacotes em modo *raw*. 
 
 As ferramentas Hping3 e Mausezahn oferecem um modo de operação interativo, que não foi avaliado neste trabalho por estar fora do escopo do estudo.
 
@@ -100,7 +100,7 @@ As ferramentas Hping3 e Mausezahn oferecem um modo de operação interativo, que
 
 * Este repositório **não deve ser utilizado para ataques reais**.
 * Todo o conteúdo foi desenvolvido **exclusivamente para fins acadêmicos e experimentais**.
-* Os *scripts* refletem exatamente os cenários avaliados no artigo, sem ajustes posteriores.
+* Os códigos e comandos refletem exatamente os cenários avaliados no artigo, sem ajustes posteriores.
 * A taxonomia de **Jelena Mirkovic** contribuiu para a análise da capacidade de geração de anomalias, sendo utilizada como principal referência. A análise incorporou diversos itens da lista da pesquisadora de forma integral, enquanto adaptou outros, descartou alguns por estarem fora do escopo e definiu novos a partir das capacidades de customização das ferramentas. Disponível em: [https://www.isi.edu/people-mirkovic/ddos-benchmarks/ddos-attack-list/](https://www.isi.edu/people-mirkovic/ddos-benchmarks/ddos-attack-list/)
 
 
@@ -109,4 +109,4 @@ As ferramentas Hping3 e Mausezahn oferecem um modo de operação interativo, que
 ## Citação
 
 Se você utilizar este repositório em trabalhos acadêmicos, considere citar o artigo correspondente.
-A entrada BibTeX será adicionada após a publicação.
+A entrada BibTeX será adicionada posteriormente.
