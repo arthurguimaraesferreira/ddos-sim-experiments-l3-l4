@@ -82,13 +82,13 @@ Os scripts foram utilizados apenas na aferição do desempenho volumétrico, sen
 
 Os experimentos envolvem ferramentas *open source* de linha de comando (CLI) que atuam nas camadas de rede e transporte, operam no sistema operacional Linux e não dependem de interação continua do usuário:
 
-* BoNeSi
-* Hping3
-* Mausezahn
-* Scapy
-* Tcpreplay
-* Trafgen
-* T50
+* BoNeSi — [GitHub](https://github.com/Markus-Go/bonesi)  
+* Hping3 — [Debian Salsa](https://salsa.debian.org/debian/hping3)  
+* Mausezahn — [GitHub](https://github.com/netsniff-ng/netsniff-ng)  
+* Scapy — [Site oficial](https://scapy.net/)  
+* Tcpreplay — [GitHub](https://github.com/appneta/tcpreplay)  
+* Trafgen — [GitHub](https://github.com/netsniff-ng/netsniff-ng)  
+* T50 — [GitLab](https://gitlab.com/fredericopissarra/t50)  
 
 Cada ferramenta foi executada em seu código original, sem modificações, e sem scripts externos que pudessem contornar suas limitações, respeitando suas funcionalidades nativas. Além disso, não foram consideradas opções de construção manual de pacotes em modo *raw*. 
 
