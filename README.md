@@ -6,7 +6,7 @@ Este repositório reúne os comandos, códigos, *scripts* e arquivos de apoio ut
 
 O repositório também inclui a **tabela completa com a descrição das anomalias de tráfego** avaliadas no trabalho, disponível no arquivo ***ANOMALIAS (Descrições e Resultados).pdf***, localizado no diretório raiz do projeto.
 
-**Artigo disponível em:** <link>
+**Artigo disponível em:** [https://sol.sbc.org.br/index.php/sbrc/article/view/42376](https://sol.sbc.org.br/index.php/sbrc/article/view/42376)
 
 ---
 
@@ -109,4 +109,20 @@ As ferramentas Hping3 e Mausezahn oferecem um modo de operação interativo, que
 ## Citação
 
 Se você utilizar este repositório em trabalhos acadêmicos, considere citar o artigo correspondente.
-A entrada BibTeX será adicionada posteriormente.
+
+```
+@inproceedings{sbrc,
+ author = {Arthur Ferreira and Carlos Pedroso and Agnaldo Batista and Aldri Santos},
+ title = { Uma Comparação de Ferramentas Open Source de CLI para Geração de Ataques DDoS em Ambientes de Internet},
+ booktitle = {Anais do XLIV Simpósio Brasileiro de Redes de Computadores e Sistemas Distribuídos},
+ location = {Praia do Forte/BA},
+ year = {2026},
+ keywords = {},
+ issn = {2177-9384},
+ pages = {1443--1456},
+ publisher = {SBC},
+ address = {Porto Alegre, RS, Brasil},
+ doi = {10.5753/sbrc.2026.19897},
+ url = {https://sol.sbc.org.br/index.php/sbrc/article/view/42376}
+}
+```
